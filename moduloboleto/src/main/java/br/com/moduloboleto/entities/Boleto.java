@@ -3,12 +3,16 @@ package br.com.moduloboleto.entities;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -21,11 +25,16 @@ public class Boleto implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqBoleto")
-	@Column(name = "idBoleto")
-	Long boletoId;
-	LocalDate createdTime;    
-	BigDecimal amount;
-	LocalDate localDate;
+	@Column(name="boleto_id")
+	private Long boletoId;
+	
+	@OneToMany(mappedBy="boletoId", cascade=CascadeType.ALL)
+	private List<BoletoTracking> boletoTrackings = new ArrayList<>();
+
+	
+	private LocalDate createdTime;    
+	private BigDecimal amount;
+	private LocalDate localDate;
 	
 	public Boleto() {
 	}

@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -22,9 +24,14 @@ public class BoletoTracking implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqBoletoTracking")
 	@Column(name = "idTracking")
-	Long ajusteId;
-	String status;
-	LocalDate createTime;
+	private Long ajusteId;
+
+	@ManyToOne
+	@JoinColumn(name="boletoId")
+	private Boleto boletoId;
+	
+	private String status;
+	private LocalDate createTime;
 
 	public BoletoTracking() {
 	}
@@ -68,5 +75,33 @@ public class BoletoTracking implements Serializable{
 		this.createTime = createTime;
 	}
 
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((ajusteId == null) ? 0 : ajusteId.hashCode());
+		return result;
+	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BoletoTracking other = (BoletoTracking) obj;
+		if (ajusteId == null) {
+			if (other.ajusteId != null)
+				return false;
+		} else if (!ajusteId.equals(other.ajusteId))
+			return false;
+		return true;
+	}
 	
 }
