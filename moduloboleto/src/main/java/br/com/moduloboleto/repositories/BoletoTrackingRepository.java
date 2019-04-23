@@ -4,6 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.moduloboleto.entities.BoletoTracking;
 
-public interface BoletoTrackingRepository extends JpaRepository<BoletoTracking, Long>  {
-
+public interface BoletoTrackingRepository extends JpaRepository<BoletoTracking, Integer>  {
 }

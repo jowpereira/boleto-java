@@ -1,7 +1,6 @@
 package br.com.moduloboleto.entities;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -11,24 +10,27 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name = "BoletoTracking")
 @Table(name = "boleto_tracking")
-@SequenceGenerator(name = "seqBoletoTracking", sequenceName = "seq_boleto_tracking", initialValue = 1, allocationSize = 1)
+//@SequenceGenerator(name = "seqBoletoTracking", sequenceName = "seq_boleto_tracking", initialValue = 1, allocationSize = 1)
 public class BoletoTracking implements Serializable{
 	
 	private static final long serialVersionUID = -3384746406580416334L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqBoletoTracking")
-	@Column(name = "idTracking")
-	private Long ajusteId;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "id_tracking")
+	private Integer ajusteId;
 
-	@ManyToOne
-	@JoinColumn(name="boletoId")
-	private Boleto boletoId;
+	@JsonIgnore
+	@OneToOne
+	@JoinColumn(name="boleto_id")
+	private Boleto boleto;
 	
 	private String status;
 	private LocalDate createTime;
@@ -36,29 +38,30 @@ public class BoletoTracking implements Serializable{
 	public BoletoTracking() {
 	}
 	
-	
-
-	public BoletoTracking(Integer boletoId
-			             ,LocalDate createdTime
-			             ,BigDecimal amount
-			             ,LocalDate localDate
-			             ,Long ajustId
-			             ,String status
-			             ,LocalDate createTime) {
-		this.ajusteId = ajustId;
-		this.status = status;
+	public BoletoTracking(Integer ajusteId, String status, LocalDate createTime, Boleto boleto) {
+		super();
+		this.ajusteId   = ajusteId;
+		this.status     = status;
 		this.createTime = createTime;
-		
-	}
+		this.boleto     = boleto;
+ 	}
 
-	public Long getAjusteId() {
+	public Integer getAjusteId() {
 		return ajusteId;
 	}
 
-	public void setAjusteId(Long ajusteId) {
+	public void setAjusteId(Integer ajusteId) {
 		this.ajusteId = ajusteId;
 	}
 
+	public Boleto getBoleto() {
+		return boleto;
+	}
+
+	public void setBoleto(Boleto boleto) {
+		this.boleto = boleto;
+	}
+	
 	public String getStatus() {
 		return status;
 	}
@@ -85,8 +88,6 @@ public class BoletoTracking implements Serializable{
 		return result;
 	}
 
-
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -103,5 +104,6 @@ public class BoletoTracking implements Serializable{
 			return false;
 		return true;
 	}
-	
+
+
 }

@@ -1,57 +1,57 @@
 package br.com.moduloboleto.entities;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity(name = "Boleto")
 @Table(name = "boleto")
-@SequenceGenerator(name = "seqBoleto", sequenceName = "seq_boleto", initialValue = 1, allocationSize = 1)
+//@SequenceGenerator(name = "seqBoleto", sequenceName = "seq_boleto", initialValue = 1, allocationSize = 1)
 public class Boleto implements Serializable{
 
 	private static final long serialVersionUID = -5072743548555835031L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqBoleto")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="boleto_id")
-	private Long boletoId;
-	
-	@OneToMany(mappedBy="boletoId", cascade=CascadeType.ALL)
-	private List<BoletoTracking> boletoTrackings = new ArrayList<>();
-
+	private Integer boletoId;
 	
 	private LocalDate createdTime;    
-	private BigDecimal amount;
-	private LocalDate localDate;
+	private double  amount;
+	private LocalDate dueDate;
 	
+	//@OneToMany(mappedBy="boletoId", cascade=CascadeType.ALL)
+	
+	@OneToMany(fetch=FetchType.EAGER)
+	@JoinColumn(name="boleto_id")	
+	private List<BoletoTracking> boletoTrackings;
+
 	public Boleto() {
 	}
 
-	public Boleto(Long boletoId, LocalDate createdTime, BigDecimal amount, LocalDate localDate) {
+	public Boleto(Integer boletoId, LocalDate createdTime, double amount, LocalDate localDate) {
 		super();
 		this.boletoId = boletoId;
 		this.createdTime = createdTime;
-		this.amount = amount;
-		this.localDate = localDate;
+		this.setAmount(amount);
+		this.setDueDate(localDate);
 	}
 
-	public Long getBoletoId() {
+	public Integer getBoletoId() {
 		return boletoId;
 	}
 
-	public void setBoletoId(Long boletoId) {
+	public void setBoletoId(Integer boletoId) {
 		this.boletoId = boletoId;
 	}
 
@@ -62,23 +62,23 @@ public class Boleto implements Serializable{
 	public void setCreatedTime(LocalDate createdTime) {
 		this.createdTime = createdTime;
 	}
-
-	public BigDecimal getAmount() {
+	
+	public double getAmount() {
 		return amount;
 	}
 
-	public void setAmount(BigDecimal amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 
-	public LocalDate getLocalDate() {
-		return localDate;
+	public LocalDate getDueDate() {
+		return dueDate;
 	}
 
-	public void setLocalDate(LocalDate localDate) {
-		this.localDate = localDate;
+	public void setDueDate(LocalDate dueDate) {
+		this.dueDate = dueDate;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -87,6 +87,14 @@ public class Boleto implements Serializable{
 		return result;
 	}
 
+	public List<BoletoTracking> getBoletoTrackings() {
+		return boletoTrackings;
+	}
+
+	public void setBoletoTrackings(List<BoletoTracking> boletoTrackings) {
+		this.boletoTrackings = boletoTrackings;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -103,5 +111,6 @@ public class Boleto implements Serializable{
 			return false;
 		return true;
 	}
+
 
 }
