@@ -1,5 +1,6 @@
 package br.com.moduloboleto.services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,12 @@ public class BoletoTrackingService {
 		return this.repoBoletoTracking.findByStatus(stuatus);
 	}
 	
-	public BoletoTrackingService() {
+	public List<BoletoTracking> findByStatusAndDate(String stuatus, Date dataini, Date datafim) {
+		return this.repoBoletoTracking.findByStatusAndDate(stuatus, dataini, datafim);
 	}
 
+	public List<BoletoTracking> findAll() {
+		return this.repoBoletoTracking.findAll();
+}
+	
 }

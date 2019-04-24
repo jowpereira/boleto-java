@@ -2,6 +2,8 @@ package br.com.moduloboleto.dtos;
 
 import java.time.LocalDate;
 
+import br.com.moduloboleto.entities.BoletoTracking;
+
 public class BoletoTrackingDTO {
 
 	private Integer boletoId;
@@ -13,12 +15,11 @@ public class BoletoTrackingDTO {
 	public BoletoTrackingDTO() {
 	}
 
-	public BoletoTrackingDTO(Integer boletoId, Integer ajusteId, String status, LocalDate createTime) {
-		super();
-		this.boletoId = boletoId;
-		this.ajusteId = ajusteId;
-		this.status = status;
-		this.createTime = createTime;
+	public BoletoTrackingDTO(BoletoTracking obj) {
+		this.boletoId   = obj.getBoleto().getBoletoId();
+		this.ajusteId   = obj.getAjusteId();
+		this.status     = obj.getStatus();
+		this.createTime = obj.getCreateTime();
 	}
 
 

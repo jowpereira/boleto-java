@@ -3,8 +3,9 @@ package br.com.moduloboleto.resources.exception;
 import java.io.Serializable;
 
 public class StandardError implements Serializable {
-	private static final long serialVersionUID = 1L;
 
+	private static final long serialVersionUID = -2644478112049613769L;
+	
 	private Long timestamp;
 	private Integer status;
 	private String error;
