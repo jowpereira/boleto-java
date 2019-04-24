@@ -10,14 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name = "BoletoTracking")
 @Table(name = "boleto_tracking")
-//@SequenceGenerator(name = "seqBoletoTracking", sequenceName = "seq_boleto_tracking", initialValue = 1, allocationSize = 1)
 public class BoletoTracking implements Serializable{
 	
 	private static final long serialVersionUID = -3384746406580416334L;
@@ -28,7 +26,7 @@ public class BoletoTracking implements Serializable{
 	private Integer ajusteId;
 
 	@JsonIgnore
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="boleto_id")
 	private Boleto boleto;
 	

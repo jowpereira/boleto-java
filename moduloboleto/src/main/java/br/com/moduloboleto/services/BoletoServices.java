@@ -1,6 +1,5 @@
 package br.com.moduloboleto.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +20,5 @@ public class BoletoServices {
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Boleto.class.getName()));
 	}
-	
-/*	@SuppressWarnings("unchecked")
-	public List<Boleto> findBoletoByStatus(String status){
-		List<Optional<Boleto>> obj = repo.findByStatus(status);
-		Optional<Boleto> newObj;
 		
-		for(Optional<Boleto> x :obj)
-		{
-			newObj.orElseThrow(() -> new ObjectNotFoundException(
-					"Objeto não encontrado! Id: " + status + ", Tipo: " + x.getClass().getName()));
-		}*/
-		
-	
 }

@@ -2,6 +2,7 @@ package br.com.moduloboleto.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -10,7 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -30,11 +30,8 @@ public class Boleto implements Serializable{
 	private double  amount;
 	private LocalDate dueDate;
 	
-	//@OneToMany(mappedBy="boletoId", cascade=CascadeType.ALL)
-	
-	@OneToMany(fetch=FetchType.EAGER)
-	@JoinColumn(name="boleto_id")	
-	private List<BoletoTracking> boletoTrackings;
+	@OneToMany(mappedBy="boleto", fetch=FetchType.LAZY)
+	private List<BoletoTracking> boletoTrackings = new ArrayList<BoletoTracking>();
 
 	public Boleto() {
 	}
