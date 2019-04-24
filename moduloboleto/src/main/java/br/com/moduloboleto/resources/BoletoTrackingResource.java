@@ -23,7 +23,7 @@ public class BoletoTrackingResource {
 	private BoletoTrackingService service;
 	
 	@GetMapping(value="/{status}")
-	public ResponseEntity<?> find(@PathVariable String status){
+	public ResponseEntity<?> findTrackingByStatus(@PathVariable String status){
 		
 		List<BoletoTracking> obj = service.findByStatus(status);
 		
