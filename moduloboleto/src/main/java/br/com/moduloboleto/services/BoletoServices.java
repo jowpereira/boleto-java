@@ -1,5 +1,6 @@
 package br.com.moduloboleto.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,10 @@ public class BoletoServices {
 		Optional<Boleto> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Boleto.class.getName()));
+	}
+	
+	public List<Boleto> findAll() {
+		return this.repo.findAll();
 	}
 		
 }

@@ -1,14 +1,14 @@
 package br.com.moduloboleto;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 import br.com.moduloboleto.entities.Boleto;
 import br.com.moduloboleto.entities.BoletoTracking;
@@ -16,7 +16,7 @@ import br.com.moduloboleto.repositories.BoletoRepository;
 import br.com.moduloboleto.repositories.BoletoTrackingRepository;
 
 @SpringBootApplication
-public class ModuloBoleto<R> implements CommandLineRunner {
+public class ModuloBoleto extends SpringBootServletInitializer implements CommandLineRunner {
 
 	@Autowired
 	public BoletoRepository repoBoleto;
@@ -43,20 +43,19 @@ public class ModuloBoleto<R> implements CommandLineRunner {
 		BoletoTracking boletoTracking7 = new BoletoTracking(null, "Cancelado", LocalDate.of(2019, 2, 4), boleto5);
 		BoletoTracking boletoTracking8 = new BoletoTracking(null, "Cancelado", LocalDate.of(2019, 3, 27), boleto6);
 
-		List<BoletoTracking> listBoletoBoletoTracking = new ArrayList<BoletoTracking>();
-		List<Boleto> listBoleto = new ArrayList<Boleto>();
-
-		listBoleto.addAll(Arrays.asList(boleto1, boleto2, boleto3, boleto4, boleto5, boleto6));
-		listBoletoBoletoTracking.addAll(Arrays.asList(boletoTracking1, boletoTracking2, boletoTracking3,
+		repoBoleto.saveAll(Arrays.asList(boleto1, boleto2, boleto3, boleto4, boleto5, boleto6));
+		repoBoletoTracking.saveAll(Arrays.asList(boletoTracking1, boletoTracking2, boletoTracking3,
 				boletoTracking4, boletoTracking5, boletoTracking6, boletoTracking7, boletoTracking8));
-
-		repoBoleto.saveAll(listBoleto);
-		repoBoletoTracking.saveAll(listBoletoBoletoTracking);
 		
 	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(ModuloBoleto.class, args);
+	}
+	
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(ModuloBoleto.class);
 	}
 
 }

@@ -13,18 +13,18 @@ import br.com.moduloboleto.repositories.BoletoTrackingRepository;
 public class BoletoTrackingService {
 
 	@Autowired
-	private BoletoTrackingRepository repoBoletoTracking;
-	
+	private BoletoTrackingRepository repo;
+
 	public List<BoletoTracking> findByStatus(String stuatus) {
-		return this.repoBoletoTracking.findByStatus(stuatus);
+		return this.repo.findByStatus(stuatus);
 	}
-	
+
 	public List<BoletoTracking> findByStatusAndDate(String stuatus, Date dataini, Date datafim) {
-		return this.repoBoletoTracking.findByStatusAndDate(stuatus, dataini, datafim);
+		return this.repo.findByStatusAndDate(stuatus, dataini, datafim);
 	}
 
 	public List<BoletoTracking> findAll() {
-		return this.repoBoletoTracking.findAll();
-}
+		return this.repo.findAll();
+	}
 	
 }

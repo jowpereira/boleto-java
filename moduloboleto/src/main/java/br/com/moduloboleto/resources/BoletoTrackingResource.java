@@ -19,38 +19,40 @@ import br.com.moduloboleto.entities.BoletoTracking;
 import br.com.moduloboleto.services.BoletoTrackingService;
 
 @RestController
-@RequestMapping(value="/boletotrackings")
+@RequestMapping(value = "/boletos")
 public class BoletoTrackingResource {
-	
-	@Autowired 
+
+	@Autowired
 	private BoletoTrackingService service;
-	
-	@GetMapping()
+
+	@GetMapping(value = "/alltrackigs/")
 	public ResponseEntity<List<BoletoTrackingDTO>> findAll() {
 		List<BoletoTracking> list = service.findAll();
-		List<BoletoTrackingDTO> listDto = list.stream().map(obj -> new BoletoTrackingDTO(obj)).collect(Collectors.toList());  
+		List<BoletoTrackingDTO> listDto = list.stream().map(obj -> new BoletoTrackingDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
-}
-	
-	@GetMapping(value="/findbystatus/{status}")
-	public ResponseEntity<List<BoletoTrackingDTO>> findTrackingByStatus(@PathVariable String status){
-		
-		List<BoletoTracking> list = service.findByStatus(status);
-		List<BoletoTrackingDTO> listDTO = list.stream().map(obj -> new BoletoTrackingDTO(obj)).collect(Collectors.toList());
-		
-		return ResponseEntity.ok().body(listDTO);
 	}
 	
-	@GetMapping(value="/findbystatusanddate")
-	public ResponseEntity<List<BoletoTrackingDTO>> findTrackingByStatusAndDate(@RequestParam(value="status",  defaultValue="Ativo", required=false)String status
-			                                                                  ,@RequestParam(value="dataini", defaultValue="null",  required=false)String dateini
-			                                                                  ,@RequestParam(value="datafim", defaultValue="null",  required=false)String datefim) throws ParseException{
+	@GetMapping(value = "/{status}")
+	public ResponseEntity<List<BoletoTrackingDTO>> findTrackingByStatus(@PathVariable String status) {
+
+		List<BoletoTracking> list = service.findByStatus(status);
+		List<BoletoTrackingDTO> listDTO = list.stream().map(obj -> new BoletoTrackingDTO(obj)).collect(Collectors.toList());
+
+		return ResponseEntity.ok().body(listDTO);
+	}
+
+	@GetMapping(value = "/findbystatusanddate")
+	public ResponseEntity<List<BoletoTrackingDTO>> findTrackingByStatusAndDate(
+			@RequestParam(value = "status", defaultValue = "Ativo", required = false) String status,
+			@RequestParam(value = "dataini", defaultValue = "null", required = false) String dateini,
+			@RequestParam(value = "datafim", defaultValue = "null", required = false) String datefim)
+			throws ParseException {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Date dataini = (Date)format.parse(dateini);
-		Date datafim = (Date)format.parse(datefim);
+		Date dataini = (Date) format.parse(dateini);
+		Date datafim = (Date) format.parse(datefim);
 		List<BoletoTracking> list = service.findByStatusAndDate(status, dataini, datafim);
 		List<BoletoTrackingDTO> listDTO = list.stream().map(obj -> new BoletoTrackingDTO(obj)).collect(Collectors.toList());
-		
+
 		return ResponseEntity.ok().body(listDTO);
 	}
 
