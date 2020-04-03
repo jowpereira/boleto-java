@@ -19,7 +19,7 @@ import br.com.moduloboleto.entities.BoletoTracking;
 import br.com.moduloboleto.services.BoletoTrackingService;
 
 @RestController
-@RequestMapping(value = "/boletos")
+@RequestMapping(value = "/trakingBoletos")
 public class BoletoTrackingResource {
 
 	@Autowired
